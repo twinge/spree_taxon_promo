@@ -14,7 +14,7 @@ module Spree
 
       item_total = 0.0
       object.line_items.each do |line_item|
-        item_total += line_item.amount if line_item.product.taxons.where(:name => preferred_taxon).present?
+        item_total += line_item.amount if line_item.product.taxons.where(:name => preferred_taxon.split(',').map(&:strip)).present?
       end
       value = item_total * BigDecimal(self.preferred_flat_percent.to_s) / 100.0
       (value * 100).round.to_f / 100
